@@ -334,3 +334,17 @@ html,body,#root,.App {
   color: white;
   border: none;
 }
+.add-to-cart-btn {
+  width: 100%;
+  padding: 1rem;
+  background-color: #ed8936;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #dd6b20;
+}

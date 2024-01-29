@@ -9,7 +9,6 @@ export function Header({ onCartClick }) {
   );
 }
 
-
 function Navigation({ onCartClick }) {
   return (
     <div className="navigation">
@@ -26,8 +25,8 @@ function UserIcon() {
       className="nav--items-icon"
       xmlns="http://www.w3.org/2000/svg"
       fill="#ffffff"
-      width="28px"
-      height="28px"
+      width="32px"
+      height="32px"
       viewBox="0 0 32 32"
       version="1.1"
     >

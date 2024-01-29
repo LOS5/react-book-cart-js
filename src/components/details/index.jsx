@@ -6,7 +6,7 @@ import {Thumbnail} from "../common/book-thumbnail";
 import {BookTitle} from "../common/book-title";
 import '../../App.scss';
 
-export function BookDetails() {
+export function BookDetails({onAddToCart}) {
   let {isbn} = useParams();
   const [book, setBook] = useState();
   useEffect(() => {
@@ -15,14 +15,14 @@ export function BookDetails() {
       return;
     }
     getBook(isbn).then((books) => setBook(books[0]));
-  },[]);
+  }, [isbn]);
 
   if (!book) {
     return <NoValidBookError/>;
   }
   return (
     <div className="book-details">
-      <ValidBookDetails book={book}/>
+      <ValidBookDetails book={book} onAddToCart={onAddToCart}/>
     </div>
   );
 }
@@ -31,11 +31,12 @@ function NoValidBookError() {
   return <h1>No valid book details found</h1>;
 }
 
-function ValidBookDetails({book}) {
+function ValidBookDetails({book, onAddToCart}) {
   return (
     <div className="book-details-container">
       <div className="book-details-thumbnail">
         <Thumbnail url={book.thumbnailUrl} title={book.title}></Thumbnail>
+        <AddToCartButton onAdd={() => onAddToCart(book)}/>
       </div>
       <div className="book-details-text">
         <BookTitle title={book.title}/>
@@ -46,6 +47,7 @@ function ValidBookDetails({book}) {
     </div>
   );
 }
+
 
 function BookDescription({book}) {
   return (
@@ -65,7 +67,7 @@ function BookDescription({book}) {
   }
 }
 
-function BookDescriptionLineItem({property,content}) {
+function BookDescriptionLineItem({property, content}) {
   return (
     <div className="book-description-line-item">
       <span className="book-description-property">{property}:</span>
@@ -73,3 +75,13 @@ function BookDescriptionLineItem({property,content}) {
     </div>
   );
 }
+
+
+function AddToCartButton({onAdd}) {
+  return (
+    <button onClick={() => onAdd()} className="add-to-cart-btn" title="Add To Cart">
+      Add To Cart
+    </button>
+  );
+}
+

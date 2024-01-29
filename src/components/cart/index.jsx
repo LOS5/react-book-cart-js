@@ -1,9 +1,41 @@
-export function CartPreview({isVisible, onCartCloseClick}) {
+import {BookAuthors} from '../catalog/book-cards';
+import {Thumbnail} from '../common/book-thumbnail';
+import {BookTitle} from '../common/book-title';
+import {Link} from 'react-router-dom';
+
+export function CartPreview({isVisible, onCartCloseClick, items}) {
   return (
     <div className={`${isVisible ? "show" : "hide"} cart-preview`}>
         <CartHeader onCloseClick={onCartCloseClick}/>
-        <EmptyCartMessage/>
+        {items && items.length > 0 ? <OrderItems items={items}/> : <EmptyCartMessage/>}
     </div>
+  );
+}
+
+function OrderItems({items}) {
+  return (
+    <div className="order-items">
+      {items.map((item) => (
+        <OrderItem key={item.id} book={item}/>
+      ))}
+    </div>
+  );
+}
+
+function OrderItem({book}) {
+  return (
+    <Link title={book.title} to={`/books/${book.isbn}`} className='order-item-wrapper'>
+      <div className="order-item">
+        <div className="order-item-thumbnail">
+          <Thumbnail url={book.thumbnailUrl} title={book.title}/>
+        </div>
+        <div className="order-item-details">
+          <BookTitle title={book.title}/>
+          <BookAuthors authors={book.authors}/>
+          <span>₹{book.price * (100 - book.discount)/100}</span>
+        </div>
+      </div>
+    </Link>
   );
 }
 
@@ -15,6 +47,7 @@ function CartHeader({onCloseClick}) {
     </div>
   );
 }
+
 
 function EmptyCartMessage() {
   return (
@@ -59,7 +92,6 @@ function EmptyCartIcon({className}) {
     </svg>
   );
 }
-
 
 function CrossButton({onClick}) {
   return (
