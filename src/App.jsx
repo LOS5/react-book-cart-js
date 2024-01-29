@@ -19,6 +19,7 @@ function App() {
   const [books, setBooks] = useState(emptyBooks);
   const [cart, setCart] = useState(emptyCart);
   const [isCartVisible, setIsCartVisible] = useState(false);
+
   useEffect(() => {
     getBooks().then(setBooks);
   }, []);
@@ -26,19 +27,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <CartPreview isVisible={isCartVisible} onCartCloseClick={hideCart} items={cart} />
-        <Header onCartClick={showCart} />
-        <Routes>
-          <Route
-            path="/books/:isbn"
-            element={<BookDetails onAddToCart={addBookToCart} />}
-          ></Route>
-          <Route
-            path="/books"
-            element={<Catalog items={books}></Catalog>}
-          ></Route>
-          <Route path="*" element={<Navigate to="/books" replace />} />
-        </Routes>
+          <CartPreview isVisible={isCartVisible} onCartCloseClick={hideCart} items={cart}/>
+          <Header onCartClick={showCart} />
+          <Routes>
+            <Route path="/books/:isbn" element={<BookDetails onAddToCart={addBookToCart} />}></Route>
+            <Route path="/books" element={<Catalog items={books}></Catalog>}></Route>
+            <Route path="*" element={<Navigate to="/books" replace />} />
+          </Routes>
         <Footer />
       </div>
     </Router>

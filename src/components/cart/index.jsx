@@ -7,7 +7,10 @@ export function CartPreview({isVisible, onCartCloseClick, items}) {
   return (
     <div className={`${isVisible ? "show" : "hide"} cart-preview`}>
         <CartHeader onCloseClick={onCartCloseClick}/>
-        {items && items.length > 0 ? <OrderItems items={items}/> : <EmptyCartMessage/>}
+        {items && items.length > 0 ? <>
+        <OrderItems items={items}/>
+        <TotalCartPrice items={items}/>
+        </> : <EmptyCartMessage/>}
     </div>
   );
 }
@@ -32,7 +35,7 @@ function OrderItem({book}) {
         <div className="order-item-details">
           <BookTitle title={book.title}/>
           <BookAuthors authors={book.authors}/>
-          <span>₹{book.price * (100 - book.discount)/100}</span>
+          <span>₹{calculateDiscountedPrice(book)}</span>
         </div>
       </div>
     </Link>
@@ -97,4 +100,17 @@ function CrossButton({onClick}) {
   return (
     <button title="close cart" className="close-btn" onClick={() => onClick()}>X</button>
   );
+}
+
+function calculateDiscountedPrice(item){
+  return item.price*(100-item.discount)/100;
+}
+
+function TotalCartPrice({items}) {
+  const discountedPrice = items.reduce((total,item)=>{return total += calculateDiscountedPrice(item)}, 0);
+  return (
+    <div className='sub-total'>
+      <span>Subtotal ({items.length} item{items.length > 1 ? 's' : ''}) : ₹{discountedPrice}</span>
+    </div>
+  )
 }
