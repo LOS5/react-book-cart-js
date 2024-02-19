@@ -36,7 +36,7 @@ function ValidBookDetails({book, onAddToCart}) {
     <div className="book-details-container">
       <div className="book-details-thumbnail">
         <Thumbnail url={book.thumbnailUrl} title={book.title}></Thumbnail>
-        <AddToCartButton onAdd={() => onAddToCart(book)}/>
+        <AddToCartButton onAdd={() => onAddToCart(book);count=count+1}/>
       </div>
       <div className="book-details-text">
         <BookTitle title={book.title}/>
